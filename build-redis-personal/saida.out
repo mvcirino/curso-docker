@@ -1,0 +1,38 @@
+[root@linux-024132 ~]#  docker build -t redis-personal .
+Sending build context to Docker daemon  49.66kB
+Step 1/7 : FROM redis:3.2.9
+ ---> 3459037fcc3a
+Step 2/7 : RUN mkdir -p /etc/redis
+ ---> Running in 8ed6f983b47c
+ ---> c3a96afeece6
+Removing intermediate container 8ed6f983b47c
+Step 3/7 : COPY redis.conf /etc/redis
+ ---> 6c51248a2a50
+Removing intermediate container 646a38ba15fc
+Step 4/7 : VOLUME /data
+ ---> Running in a03e8081718c
+ ---> 1edec1c1c055
+Removing intermediate container a03e8081718c
+Step 5/7 : WORKDIR /data
+ ---> 588e580bc455
+Removing intermediate container 3906218fe7fd
+Step 6/7 : CMD redis-server /etc/redis/redis.conf
+ ---> Running in 07a8b59c049a
+ ---> e87c6ce146d8
+Removing intermediate container 07a8b59c049a
+Step 7/7 : EXPOSE 6379
+ ---> Running in c003e49ad05d
+ ---> 8351d869327f
+Removing intermediate container c003e49ad05d
+Successfully built 8351d869327f
+Successfully tagged redis-personal:latest
+
+#Executando
+[root@linux-024132 ~]# docker container run --name meu-redis -d -p 6302:6379 -v $(pwd):/data redis-personal
+
+#Acessando o redis (eu tenho o executável redis-cli no meu servidor.)
+[root@linux-024132 ~]# redis-cli -p 6302
+127.0.0.1:6302> DBSIZE
+Error: Connection reset by peer
+ 
+
